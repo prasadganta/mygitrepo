@@ -1,0 +1,8 @@
+com\statustracker\springboot\util\CustomErrorType.class
+com\statustracker\springboot\StatusTrackerApplication.class
+com\statustracker\springboot\model\LoginResponse.class
+com\statustracker\springboot\controller\RestApiController.class
+com\statustracker\springboot\model\LoginRequest.class
+com\statustracker\springboot\model\UserTaskDetailsBean.class
+com\statustracker\springboot\StatusRepository\StatusRepository.class
+com\statustracker\springboot\model\StatusDetail.class
