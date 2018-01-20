@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Component;
-
+//A mongodb Repo class
 @Component("statusRepository")
 public interface StatusRepository extends MongoRepository<StatusDetail,String> {
     

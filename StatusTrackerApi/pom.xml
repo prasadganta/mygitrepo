@@ -5,7 +5,7 @@
 	<groupId>com.websystique.springboot</groupId>
 	<artifactId>StatusTrackerApi</artifactId>
 	<version>1.0.0</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>StatusTrackerApi</name>
 
