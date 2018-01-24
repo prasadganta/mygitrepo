@@ -1,5 +1,7 @@
 package com.statustracker.springboot.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.Response;
 
@@ -35,13 +37,14 @@ public class RestApiController {
 
 	@Autowired
 	StatusDetail statusDetail;
+	
 
 	public static final Logger logger = LoggerFactory.getLogger(RestApiController.class);
 
-	@RequestMapping(value = "/loginRequest", method = RequestMethod.POST)
-	public LoginResponse LoginRequest(@RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse) {
+	@RequestMapping(value = "/loginRequest", method = RequestMethod.GET)
+	public LoginResponse LoginRequest(@RequestParam("username") String username,@RequestParam("service") String pwd, HttpServletResponse httpServletResponse) {
 		LoginResponse loginResponse = new LoginResponse();
-		logger.info(loginRequest.getUsername());
+		logger.info(username);
 		loginResponse.setSuccess("success");
 		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 		return loginResponse;
@@ -63,7 +66,7 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/getTask", method = RequestMethod.GET, produces = "application/json")
-	public void GetTaskRequest(@RequestParam("userName") String userName, @RequestParam("entryDate") String entryDate,
+	public StatusDetail GetTaskRequest(@RequestParam("userName") String userName, @RequestParam("entryDate") String entryDate,
 			HttpServletResponse httpServletResponse) {
 		try {
 			statusDetail = processStatusDetails.retrive(userName, entryDate);
@@ -72,38 +75,42 @@ public class RestApiController {
 			ObjectMapper mapperObj = new ObjectMapper();
 
 		
-			String jsonStr = mapperObj.writeValueAsString(statusDetail);
+			/*String jsonStr = mapperObj.writeValueAsString(statusDetail);
 			System.out.println(jsonStr);
 
 			httpServletResponse.getWriter().write(jsonStr);
 			httpServletResponse.getWriter().flush();
-			httpServletResponse.getWriter().close();
+			httpServletResponse.getWriter().close();*/
+			
 		} catch (Exception e) {
 			logger.error("Unable to insert record to DB " + e.getCause().getMessage());
 			httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
 		}
+		return statusDetail;
 
 	}
 
 	@RequestMapping(value = "/getAllTask", method = RequestMethod.GET, produces = "application/json")
-	public void GetAllTaskRequest(@RequestParam("entryDate") String entryDate,
+	public Iterable<StatusDetail> GetAllTaskRequest(@RequestParam("entryDate") String entryDate,
 			HttpServletResponse httpServletResponse) {
+		List<StatusDetail> allTaskDetails=null;
 		try {
-			Iterable<StatusDetail> allTaskDetails = processStatusDetails.retriveByDate(entryDate);
-			httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+			 allTaskDetails = processStatusDetails.retriveByDate(entryDate);
+			/*httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 			httpServletResponse.setContentType("application/json");
 			ObjectMapper mapperObj = new ObjectMapper();
 			String jsonStr = mapperObj.writeValueAsString(allTaskDetails);
 
 			httpServletResponse.getWriter().write(jsonStr);
 			httpServletResponse.getWriter().flush();
-			httpServletResponse.getWriter().close();
+			httpServletResponse.getWriter().close();*/
 		} catch (Exception e) {
 			logger.error("Unable to insert record to DB " + e.getCause().getMessage());
 			httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
 		}
+		return allTaskDetails;
 
 	}
 }

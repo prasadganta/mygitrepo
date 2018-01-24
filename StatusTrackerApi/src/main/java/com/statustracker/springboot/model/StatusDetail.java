@@ -25,6 +25,7 @@ public class StatusDetail {
 	private String blocker;
 	private String entryDate;
 	private String svcName;
+	
 
 
 	public String getId() {
